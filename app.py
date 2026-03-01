@@ -11,6 +11,7 @@ import websockets
 import json
 import logging
 import argparse
+import os
 import time
 import re
 from datetime import datetime
@@ -22,7 +23,7 @@ logging.basicConfig(
 )
 log = logging.getLogger("irc-server")
 
-SERVER_NAME = "SHINYA-IRC"
+SERVER_NAME = "Shinya-IRC"
 SERVER_VERSION = "1.0"
 MOTD = [
     f"*** Welcome to {SERVER_NAME} v{SERVER_VERSION} ***",
@@ -829,7 +830,7 @@ class IRCServer:
 def main():
     parser = argparse.ArgumentParser(description="WebSocket IRC Server")
     parser.add_argument("--host", default="0.0.0.0", help="Bind address (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=6667, help="Bind port (default: 6667)")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 6667)), help="Bind port (default: 6667)")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
     if args.debug:
